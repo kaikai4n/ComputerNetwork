@@ -27,3 +27,25 @@ void create_socket_info(
         // an empty sockaddr_in structure
     }
 }
+
+void set_timeout(int sockfd, int timeout){
+    struct timeval *tv;
+    tv = (struct timeval *)malloc(sizeof(struct timeval));
+    int seconds = (int)timeout/1000;
+    int mseconds = timeout - seconds * 1000;
+    tv->tv_sec = seconds;
+    tv->tv_usec = 1000 * mseconds;
+    int ret = setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (const char *)tv, sizeof(*tv));
+}
+
+void tik(struct timeval *start_time){
+    gettimeofday(start_time, NULL);
+}
+
+int tok(struct timeval *start_time){
+    struct timeval end_time;
+    gettimeofday(&end_time, NULL);
+    int delayed_time_usec = 1000000 * (end_time.tv_sec - start_time->tv_sec)
+         + (end_time.tv_usec - start_time->tv_usec);
+    return (int) delayed_time_usec / 1000;
+}
