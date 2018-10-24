@@ -71,7 +71,6 @@ struct client_args * parse_client_args(int argc, char **argv){
             exit(-1);
         }
         argv[i][colon_index] = '\0';
-        printf("strlen:%d\n", strlen(argv[i]));
         if(strlen(argv[i]) >= 16){
             printf("Invlid Ipv4 ip address with more than 16 chars %s\n", argv[i]);
             exit(-1);
