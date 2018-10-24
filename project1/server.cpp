@@ -21,9 +21,8 @@ int main(int argc, char *argv[]){
         char server_msg[] = "Hi, I am server.";
         printf("Server receive connection from client %d\n", 
                 client_info.sin_addr.s_addr);
+        sleep(1);
         send(client_sockfd, server_msg, sizeof(server_msg), 0);
-        printf("Server send message and exit\n");
-        exit(0);
     }
     return 0;
 }
