@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/time.h>
+#include <pthread.h>
 
 // Define constant variables
 #define CLIENT 0
@@ -19,10 +20,14 @@ struct client_args{
     int server_num;
     struct host_port **host_port;
 };
-
 struct host_port{
     char host[16];
     int port;
+};
+struct ping_args{
+    int number;
+    int timeout;
+    struct host_port *host_port;
 };
 
 // Define function headers
