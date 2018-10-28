@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include <sys/time.h>
 #include <pthread.h>
+#include <netdb.h>
 
 // Define constant variables
 #define CLIENT 0
@@ -45,4 +46,5 @@ int tok(struct timeval *);
 
 int parse_server_args(int argc, char **argv);
 struct client_args * parse_client_args(int argc, char **argv);
+void host_to_ip(char *hostname, char *ip);
 

@@ -17,7 +17,9 @@ void create_socket_info(
     bzero(info, sizeof(*info));
     if(type == CLIENT){
         info->sin_family = PF_INET;
-        info->sin_addr.s_addr = inet_addr(ip);
+        char converted_ip[100];
+        host_to_ip(ip, converted_ip);
+        info->sin_addr.s_addr = inet_addr(converted_ip);
         info->sin_port = htons(port);
     }else if(type == SERVER){
         info->sin_family = PF_INET;
@@ -25,6 +27,22 @@ void create_socket_info(
         info->sin_port = htons(port);
     }else{
         // an empty sockaddr_in structure
+    }
+}
+
+void host_to_ip(char *hostname, char *ip){
+    struct hostent *he;
+    struct in_addr **addr_list;
+    if ( (he = gethostbyname( hostname ) ) == NULL){
+        // get the host info
+        fprintf(stderr, "Cannot convert host to ip address.\n");
+        exit(-1);
+    }
+    addr_list = (struct in_addr **) he->h_addr_list;
+    for(int i = 0; addr_list[i] != NULL; i++){
+        //Return the first one;
+        strcpy(ip, inet_ntoa(*addr_list[i]) );
+        return; 
     }
 }
 
