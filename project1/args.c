@@ -19,7 +19,12 @@ struct client_args * parse_client_args(int argc, char **argv){
     args->timeout = 1000;
     args->server_num = 0;
     int check_number = 0, check_timeout = 0, check_host_port = 0;
-    int check_used[argc] = {};
+    int **check_used;
+    check_used = (int **)malloc(sizeof(int *) * argc);
+    for(int i = 0; i < argc; i++){
+        check_used[i] = (int*) malloc(sizeof(int));
+        *check_used[i] = 0;
+    }
     for(int i = 1; i < argc; i++){
         if(strcmp(argv[i], "-n") == 0){
             if(i + 1 >= argc){
@@ -31,8 +36,8 @@ struct client_args * parse_client_args(int argc, char **argv){
             }
             args->number = atoi(argv[i+1]);
             check_number = 1;
-            check_used[i] = 1;
-            check_used[i+1] = 1;
+            *check_used[i] = 1;
+            *check_used[i+1] = 1;
             i ++;
         }else if(strcmp(argv[i], "-t") == 0){
             if(i + 1 >= argc){
@@ -44,8 +49,8 @@ struct client_args * parse_client_args(int argc, char **argv){
             }
             args->timeout = atoi(argv[i+1]);
             check_timeout = 1;
-            check_used[i] = 1;
-            check_used[i+1] = 1;
+            *check_used[i] = 1;
+            *check_used[i+1] = 1;
             i ++;
         }else{
             args->server_num ++;
@@ -58,7 +63,7 @@ struct client_args * parse_client_args(int argc, char **argv){
     args->host_port = (struct host_port **)malloc(
         sizeof(struct host_port *) * args->server_num);
     for(int i = 1, host_port_i = 0; i < argc; i++){
-        if(check_used[i] == 1)
+        if(*check_used[i] == 1)
             continue;
         args->host_port[host_port_i] = 
             (struct host_port *)malloc(sizeof(struct host_port));
