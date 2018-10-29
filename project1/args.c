@@ -75,7 +75,9 @@ struct client_args * parse_client_args(int argc, char **argv){
             printf("Invlid Ipv4 ip address with more than 16 chars %s\n", argv[i]);
             exit(-1);
         }
-        strncpy(args->host_port[host_port_i]->host, argv[i], strlen(argv[i]));
+        char temp_ip[100];
+        host_to_ip(argv[i], temp_ip);
+        strncpy(args->host_port[host_port_i]->host, temp_ip, strlen(temp_ip));
         args->host_port[host_port_i]->port = atoi(&argv[i][colon_index+1]);
         host_port_i ++;
     }

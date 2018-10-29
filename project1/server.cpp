@@ -6,7 +6,7 @@ int main(int argc, char *argv[]){
     struct sockaddr_in server_info, client_info;
     socklen_t client_info_size = sizeof(client_info);
     char empty_ip[] = {""};
-    const int MAX_NUM_CONN = 5;
+    const int MAX_NUM_CONN = 1024;
     create_socket_info(&server_info, SERVER, empty_ip, server_port);
     create_socket_info(&client_info, -1, empty_ip, -1);
     bind(server_sockfd, (struct sockaddr *)&server_info, sizeof(server_info));
