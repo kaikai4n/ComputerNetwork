@@ -60,10 +60,10 @@ void tik(struct timeval *start_time){
     gettimeofday(start_time, NULL);
 }
 
-int tok(struct timeval *start_time){
+float tok(struct timeval *start_time){
     struct timeval end_time;
     gettimeofday(&end_time, NULL);
     int delayed_time_usec = 1000000 * (end_time.tv_sec - start_time->tv_sec)
          + (end_time.tv_usec - start_time->tv_usec);
-    return (int) delayed_time_usec / 1000;
+    return (float) delayed_time_usec / (float) 1000;
 }

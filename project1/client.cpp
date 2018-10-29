@@ -60,13 +60,13 @@ void *ping(void *this_ping_args){
         tik(&start_time);
         send(sockfd, send_msg, sizeof(send_msg), 0);
         int recv_len = recv(sockfd, recv_msg, sizeof(recv_msg), 0);
-        int delayed_msec = tok(&start_time);
+        float delayed_msec = tok(&start_time);
         //printf("Delayed_msec: %d\n", delayed_msec);
-        if(delayed_msec >= timeout || recv_len <= 0){
+        if((int)delayed_msec >= timeout || recv_len <= 0){
             // timeout
             printf("timeout when connect to %s\n", ip);
         }else{
-            printf("recv from %s, RTT = %d msec\n",
+            printf("recv from %s, RTT = %.3f msec\n",
                     ip, delayed_msec);
         }
         close(sockfd);

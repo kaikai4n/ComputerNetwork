@@ -42,7 +42,7 @@ void create_socket_info(
 );
 void set_timeout(int sockfd, int timeout);
 void tik(struct timeval *);
-int tok(struct timeval *);
+float tok(struct timeval *);
 
 int parse_server_args(int argc, char **argv);
 struct client_args * parse_client_args(int argc, char **argv);
