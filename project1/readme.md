@@ -37,3 +37,5 @@
     - ``gettimeofday(start_time, NULL)``
 - Client implements with ``<pthread>`` which can ping multiple server at a time.
 - For each ping connection, it connects to the server and send message immediately. After it receives response from server, if the RTT time is larger than timeout, it shows timeout, otherwise it shows the RTT time (msec). Note that ``setsockopt`` prevents clients from blocking in ``recv`` function. Also, I manage ``tik`` and ``tok`` functions to count the correct RTT using ``gettimeofday`` function as backbone. It starts calculating time once send message and ends calculating once the receive function returns.
+## Notice
+- I ping and connect from client to server once at a time. That is, After connection established, client sends message to server, waiting for the function ``recv`` returns and print out results (timeout or RTT time), then client close the connection and ping the server again until the number of time ``-n`` is reached. As a result, from server side, it receives continous connections from the same client ip but may be from different ports.
